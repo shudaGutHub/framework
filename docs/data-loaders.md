@@ -1,5 +1,5 @@
 ---
-keywords: server-side rendering, ssr
+keywords: server-side rendering, ssr, polyglot
 ---
 
 # Data loaders
@@ -11,7 +11,7 @@ Why static snapshots? Performance is critical for dashboards: users don’t like
 <div class="tip">Data loaders are optional. You can use <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetch</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">WebSocket</a></code> if you prefer to load data at runtime, or you can store data in static files.</div>
 <div class="tip">You can use <a href="./deploying">continuous deployment</a> to rebuild data as often as you like, ensuring that data is always up-to-date.</div>
 
-Data loaders can be written in any programming language. They can even invoke binary executables such as ffmpeg or DuckDB. For convenience, Framework has built-in support for common languages: JavaScript, TypeScript, Python, and R. Naturally you can use any third-party library or SDK for these languages, too.
+Data loaders are polyglot: they can be written in any programming language. They can even invoke binary executables such as ffmpeg or DuckDB. For convenience, Framework has built-in support for common languages: JavaScript, TypeScript, Python, and R. Naturally you can use any third-party library or SDK for these languages, too.
 
 A data loader can be as simple as a shell script that invokes [curl](https://curl.se/) to fetch recent earthquakes from the [USGS](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php):
 
@@ -167,7 +167,7 @@ To use an interpreted data loader (anything other than `.exe`), the correspondin
 
 <div class="tip" id="venv">
 
-You can use a virtual environment in Python, such as [venv](https://docs.python.org/3/tutorial/venv.html) or  [uv](https://github.com/astral-sh/uv), to install libraries locally to the project. This is useful when working in multiple projects, and when collaborating; you can also track dependencies in a `requirements.txt` file.
+You can use a virtual environment in Python, such as [venv](https://docs.python.org/3/tutorial/venv.html) or [uv](https://github.com/astral-sh/uv), to install libraries locally to the project. This is useful when working in multiple projects, and when collaborating; you can also track dependencies in a `requirements.txt` file.
 
 To create a virtual environment with venv:
 
@@ -241,7 +241,7 @@ Data loaders generate files at build time that live alongside other [static file
 ├─ src
 │  ├─ index.md
 │  └─ quakes.json.sh
-└─ ...
+└─ …
 ```
 
 Where `quakes.json.sh` is:
@@ -258,9 +258,9 @@ This will produce the following output root:
 │  ├─ _file
 │  │  └─ quakes.99da78d9.json
 │  ├─ _observablehq
-│  │  └─ ... # additional assets for serving the site
+│  │  └─ … # additional assets
 │  └─ index.html
-└─ ...
+└─ …
 ```
 
 As another example, say you have a `quakes.zip` archive that includes yearly files for observed earthquakes. If you reference `FileAttachment("quakes/2021.csv")`, Framework will pull the `2021.csv` from `quakes.zip`. So this source root:
@@ -270,7 +270,7 @@ As another example, say you have a `quakes.zip` archive that includes yearly fil
 ├─ src
 │  ├─ index.md
 │  └─ quakes.zip
-└─ ...
+└─ …
 ```
 
 Becomes this output:
@@ -282,9 +282,9 @@ Becomes this output:
 │  │  └─ quakes
 │  │     └─ 2021.e5f2eb94.csv
 │  ├─ _observablehq
-│  │  └─ ... # additional assets for serving the site
+│  │  └─ … # additional assets
 │  └─ index.html
-└─ ...
+└─ …
 ```
 
 A data loader is only run during build if its corresponding output file is referenced in at least one page. Framework does not scour the source root (typically `src`) for data loaders.
